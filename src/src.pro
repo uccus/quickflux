@@ -1,6 +1,20 @@
+QT          += qml quick svg
+CONFIG      += plugin c++11
+TEMPLATE    = lib
+TARGET      = QuickFlux
+TARGET      = $$qtLibraryTarget($$TARGET)
+uri         = QuickFlux
+
+##########################################
+CONFIG += sharedlib  # staticlib or sharedlib
+##########################################
+
+include(src.pri)
+
 INCLUDEPATH += $$PWD
 
 HEADERS += \
+    $$PWD/qml_plugin.h \
     $$PWD/qfapplistener.h \
     $$PWD/qfappscript.h \
     $$PWD/priv/qfappscriptrunnable.h \
@@ -27,6 +41,7 @@ HEADERS += \
     $$PWD/qfmiddlewarelist.h
 
 SOURCES += \
+    $$PWD/qml_plugin.cpp \
     $$PWD/qfapplistener.cpp \
     $$PWD/qfappscript.cpp \
     $$PWD/qfappscriptrunnable.cpp \

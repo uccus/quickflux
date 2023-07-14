@@ -25,6 +25,7 @@ set(quickflux_PRIVATE_SOURCES
   )
 
 set(quickflux_PUBLIC_SOURCES
+  ${SRC_DIR}/qml_plugin.cpp
   ${SRC_DIR}/qfactioncreator.cpp
   ${SRC_DIR}/qfappdispatcher.cpp
   ${SRC_DIR}/qfapplistener.cpp
@@ -88,7 +89,8 @@ if(MSVC)
   source_group("Source Files\\MOC" REGULAR_EXPRESSION "moc*")
 endif()
 
-add_library(quickflux STATIC
+# add_library(quickflux STATIC
+add_library(quickflux SHARED
   ${quickflux_PRIVATE_SOURCES}
   ${quickflux_PRIVATE_HEADERS}
   ${quickflux_PUBLIC_SOURCES}
@@ -96,6 +98,20 @@ add_library(quickflux STATIC
   ${moc}
   )
 add_library(QuickFlux::quickflux ALIAS quickflux)
+set(LIB_NAME quickflux)
+set(LIB_VERSION 1.0)
+add_custom_target(${PROJECT_NAME}_QMLFILE ALL
+    COMMAND
+        ${CMAKE_COMMAND} -E 
+        copy
+        ${SRC_DIR}/qmldir
+        $<TARGET_FILE_DIR:${PROJECT_NAME}>/${PROJECT_NAME}/qmldir
+)
+add_custom_target(${PROJECT_NAME}_PLUGIN_INFO ALL
+    # qmlplugindump -nonrelocatable ${PROJECT_NAME} ${LIB_VERSION}  > $<TARGET_FILE_DIR:${PROJECT_NAME}>/${LIB_NAME}/plugin.qmltypes
+    qmlplugindump -nonrelocatable QuickFlux ${LIB_VERSION}  > $<TARGET_FILE_DIR:${PROJECT_NAME}>/${LIB_NAME}/plugin.qmltypes
+    DEPENDS ${PROJECT_NAME}
+)
 
 target_link_libraries(quickflux
   PUBLIC

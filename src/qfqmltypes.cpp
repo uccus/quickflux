@@ -36,7 +36,7 @@ static QObject* hydrateProvider(QQmlEngine *engine, QJSEngine *scriptEngine) {
 }
 
 
-void registerQuickFluxQmlTypes()
+void registerQuickFluxQmlTypes(const char* uri)
 {
     static bool registered = false;
     if (registered) {
@@ -45,42 +45,42 @@ void registerQuickFluxQmlTypes()
 
     registered = true;
 
-    qmlRegisterSingletonType<QFAppDispatcher>("QuickFlux", 1, 0, "AppDispatcher", appDispatcherProvider);
-    qmlRegisterType<QFAppListener>("QuickFlux", 1, 0, "AppListener");
-    qmlRegisterType<QFAppScript>("QuickFlux", 1, 0, "AppScript");
-    qmlRegisterType<QFAppListenerGroup>("QuickFlux", 1, 0, "AppListenerGroup");
-    qmlRegisterType<QFAppScriptGroup>("QuickFlux", 1, 0, "AppScriptGroup");
+    qmlRegisterSingletonType<QFAppDispatcher>(uri, 1, 0, "AppDispatcher", appDispatcherProvider);
+    qmlRegisterType<QFAppListener>(uri, 1, 0, "AppListener");
+    qmlRegisterType<QFAppScript>(uri, 1, 0, "AppScript");
+    qmlRegisterType<QFAppListenerGroup>(uri, 1, 0, "AppListenerGroup");
+    qmlRegisterType<QFAppScriptGroup>(uri, 1, 0, "AppScriptGroup");
 
 #if (QT_VERSION >= QT_VERSION_CHECK(5, 14, 0))
-    qmlRegisterAnonymousType<QFAppScriptRunnable>("QuickFlux", 1);
+    qmlRegisterAnonymousType<QFAppScriptRunnable>(uri, 1);
 #else
     qmlRegisterType<QFAppScriptRunnable>();
 #endif
 
-    qmlRegisterType<QFKeyTable>("QuickFlux", 1, 0, "KeyTable");
-    qmlRegisterType<QFActionCreator>("QuickFlux", 1, 0, "ActionCreator");
-    qmlRegisterType<QFFilter>("QuickFlux", 1, 0, "Filter");
+    qmlRegisterType<QFKeyTable>(uri, 1, 0, "KeyTable");
+    qmlRegisterType<QFActionCreator>(uri, 1, 0, "ActionCreator");
+    qmlRegisterType<QFFilter>(uri, 1, 0, "Filter");
 
     /* 1.1 */
-    qmlRegisterType<QFActionCreator>("QuickFlux", 1, 1, "ActionCreator");
-    qmlRegisterType<QFAppListener>("QuickFlux", 1, 1, "AppListener");
-    qmlRegisterType<QFAppScript>("QuickFlux", 1, 1, "AppScript");
-    qmlRegisterType<QFAppListenerGroup>("QuickFlux", 1, 1, "AppListenerGroup");
-    qmlRegisterType<QFAppScriptGroup>("QuickFlux", 1, 1, "AppScriptGroup");
-    qmlRegisterType<QFFilter>("QuickFlux", 1, 1, "Filter");
-    qmlRegisterType<QFKeyTable>("QuickFlux", 1, 1, "KeyTable");
-    qmlRegisterType<QFActionCreator>("QuickFlux", 1, 1, "ActionCreator");
+    qmlRegisterType<QFActionCreator>(uri, 1, 1, "ActionCreator");
+    qmlRegisterType<QFAppListener>(uri, 1, 1, "AppListener");
+    qmlRegisterType<QFAppScript>(uri, 1, 1, "AppScript");
+    qmlRegisterType<QFAppListenerGroup>(uri, 1, 1, "AppListenerGroup");
+    qmlRegisterType<QFAppScriptGroup>(uri, 1, 1, "AppScriptGroup");
+    qmlRegisterType<QFFilter>(uri, 1, 1, "Filter");
+    qmlRegisterType<QFKeyTable>(uri, 1, 1, "KeyTable");
+    qmlRegisterType<QFActionCreator>(uri, 1, 1, "ActionCreator");
 
     /* New components in 1.1 */
-    qmlRegisterSingletonType<QFHydrate>("QuickFlux", 1, 1, "Hydrate", hydrateProvider);
-    qmlRegisterType<QFDispatcher>("QuickFlux", 1, 1, "Dispatcher");
-    qmlRegisterType<QFStore>("QuickFlux", 1, 1, "Store");
-    qmlRegisterType<QFMiddlewareList>("QuickFlux", 1, 1, "MiddlewareList");
-    qmlRegisterType<QFMiddleware>("QuickFlux", 1, 1, "Middleware");
-    //    qmlRegisterType<QFObject>("QuickFlux", 1, 1, "Object");
+    qmlRegisterSingletonType<QFHydrate>(uri, 1, 1, "Hydrate", hydrateProvider);
+    qmlRegisterType<QFDispatcher>(uri, 1, 1, "Dispatcher");
+    qmlRegisterType<QFStore>(uri, 1, 1, "Store");
+    qmlRegisterType<QFMiddlewareList>(uri, 1, 1, "MiddlewareList");
+    qmlRegisterType<QFMiddleware>(uri, 1, 1, "Middleware");
+    //    qmlRegisterType<QFObject>(uri, 1, 1, "Object");
 }
 
 // Allow to disable QML types auto registration as required by #9
-#ifndef QUICK_FLUX_DISABLE_AUTO_QML_REGISTER
-Q_COREAPP_STARTUP_FUNCTION(registerQuickFluxQmlTypes)
-#endif
+// #ifndef QUICK_FLUX_DISABLE_AUTO_QML_REGISTER
+// Q_COREAPP_STARTUP_FUNCTION(registerQuickFluxQmlTypes)
+// #endif

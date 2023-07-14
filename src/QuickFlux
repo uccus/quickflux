@@ -2,4 +2,4 @@
 #include <QFAppDispatcher>
 #include <QFKeyTable>
 
-void registerQuickFluxQmlTypes();
+void registerQuickFluxQmlTypes(const char* uri);
